@@ -20,7 +20,28 @@ class Grade(models.Model):
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     score = models.IntegerField()
+    
 
 class StudentProfile(models.Model):
     student = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     address = models.TextField(blank=True)
+
+class Subject(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+class Grade(models.Model):
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    score = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.student.username} - {self.subject.name}: {self.score}"
+    student = models.ForeignKey(
+    CustomUser,
+    on_delete=models.CASCADE,
+    related_name='grades'
+)
+
+
